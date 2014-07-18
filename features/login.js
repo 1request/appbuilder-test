@@ -1,4 +1,4 @@
-var Client = require("./client.js");
+var Client = require("./lib/client.js");
 
 module.exports = {
   'Login' : function (cli) {

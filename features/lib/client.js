@@ -1,6 +1,8 @@
 module.exports = function(_client) {
   client = _client;
 
+  client.appKey = _client.globals.appKey;
+
   client.visitAppBuilder = function() {
     _client 
       .url('http://localhost:3000')
