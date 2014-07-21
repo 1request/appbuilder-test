@@ -6,7 +6,7 @@ AppBuilder Test Suite
 ````sh
 git clone https://github.com/1request/appbuilder-test.git
 
-cd tests
+cd appbuilder-test
 
 npm install nightwatch@0.5.3
 npm install coffee-script
@@ -17,7 +17,7 @@ npm install coffee-script
 Before running your test, make sure your application has been started already.
 
 ````sh
-cd tests
+cd appbuilder-test
 
 ./nightwatch.sh test.coffee
 ````
