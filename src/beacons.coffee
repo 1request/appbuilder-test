@@ -7,7 +7,7 @@ zone_enterance = 'Enterance'
 zone_info_center = 'Information Center'
 notes = 'Information Center at exit East'
 
-row = 'tr[id="' + uuid + '"]'
+row = 'tr[id="' + uuid + '-' + major + '-' + minor + '"]'
 col = (n) ->
   row + ' > td:nth-child(' + n + ')'
 button = (action) ->
