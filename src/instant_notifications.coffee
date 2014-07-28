@@ -106,8 +106,9 @@ module.exports =
       .assert.containsText 'div[class="lock-screen-app-text"]', message
       .click button('in/out')
       .assert.visible 'iframe[src="' + url + '"]'
+      .click button('in/out')
       .click button('submit')
-      .pause 5000
+      .pause 3000
 
     # Validate after creating notification
     client
@@ -150,7 +151,7 @@ module.exports =
       .assert.containsText 'div[class="lock-screen-app-title"]', kodw
       .assert.containsText 'div[class="lock-screen-app-text"]', message
       .click button('submit')
-      .pause 5000
+      .pause 3000
 
     # Validate after creating notification
     client
@@ -159,6 +160,48 @@ module.exports =
       .assert.elementPresent col(4) + ' > img'
       .assert.containsText button('delete'), 'Delete Notification'
       .end()
+
+  'Create instant notification and open video' : (browser) ->
+    client = new Client browser
+    login()
+    switchAppToKodw()
+    visitInstantNotificationPage()
+
+    message = 'Mobile Innovation: O2O User Experience'
+    url = 'http://youtu.be/vdd0O2Wp364'
+
+    # Add instant notification
+    client
+      .click button('new')
+      .pause 1000
+      .assert.containsText 'h2' , 'Instant Notifications'
+    
+    # Select action: Open web page
+    client
+      .click 'select[id="action"]'
+      .click 'option[value="video"]'
+      .pause 1000
+      .assert.elementPresent 'input[name="message"]'
+      .assert.elementPresent 'input[name="url"]'
+
+    # Input notification detail
+    client
+      .setValue 'input[name="message"]', message
+      .setValue 'input[name="url"]', url
+      .assert.containsText 'div[class="lock-screen-app-title"]', kodw
+      .assert.containsText 'div[class="lock-screen-app-text"]', message
+      .click button('in/out')
+      .assert.visible 'iframe[src="' + url + '"]'
+      .click button('submit')
+      .pause 10000
+
+    # Validate after creating notification
+    client
+      .assert.containsText col(2), message
+      .assert.containsText col(3), 'Open video'
+      .assert.containsText col(4), url
+      .assert.containsText button('delete'), 'Delete Notification'
+     .end()
 
   'Show preview error page when opening an URL with CORS policy problem' : (browser) ->
     client = new Client browser
@@ -185,4 +228,5 @@ module.exports =
       .click button('in/out')
       .pause 10000
       .assert.visible 'iframe[src="/cors"]'
+      .click button('in/out')
       .end()
