@@ -160,3 +160,29 @@ module.exports =
       .assert.containsText button('delete'), 'Delete Notification'
       .end()
 
+  'Show preview error page when opening an URL with CORS policy problem' : (browser) ->
+    client = new Client browser
+    login()
+    switchAppToKodw()
+    visitInstantNotificationPage()
+
+    # Goto add instant notification page
+    client
+      .click button('new')
+      .pause 1000
+
+    # Select action: Open web page
+    client
+      .click 'select[id="action"]'
+      .click 'option[value="url"]'
+      .pause 1000
+      .assert.elementPresent 'input[name="message"]'
+      .assert.elementPresent 'input[name="url"]'
+
+    # Input url with CORS policy problem
+    client
+      .setValue 'input[name="url"]', 'http://www.google.com'
+      .click button('in/out')
+      .pause 10000
+      .assert.visible 'iframe[src="/cors"]'
+      .end()
