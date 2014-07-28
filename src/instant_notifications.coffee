@@ -107,7 +107,7 @@ module.exports =
       .click button('in/out')
       .assert.visible 'iframe[src="' + url + '"]'
       .click button('submit')
-      .pause 1000
+      .pause 5000
 
     # Validate after creating notification
     client
@@ -116,3 +116,47 @@ module.exports =
       .assert.containsText col(4), url
       .assert.containsText button('delete'), 'Delete Notification'
       .end()
+
+  'Create instant notification and open image' : (browser) ->
+    client = new Client browser
+    login()
+    switchAppToKodw()
+    visitInstantNotificationPage()
+
+    message = '紅米1S智能電話香港版 + 1年原廠保養服務'
+    filename = 'redmi1s.jpg'
+    file = process.cwd() + '/data/' + filename
+
+    # Add instant notification
+    client
+      .click button('new')
+      .pause 1000
+      .assert.containsText 'h2' , 'Instant Notifications'
+    
+    # Select action: Open web page
+    client
+      .click 'select[id="action"]'
+      .click 'option[value="image"]'
+      .pause 1000
+      .assert.elementPresent 'input[name="message"]'
+      .assert.elementPresent 'input[type=file]'
+
+    # Input notification detail
+    client
+      .setValue 'input[type=file]', file
+      .setValue 'input[name="message"]', message
+      .pause 5000
+      .assert.elementPresent 'img[alt="' + filename + '"]'
+      .assert.containsText 'div[class="lock-screen-app-title"]', kodw
+      .assert.containsText 'div[class="lock-screen-app-text"]', message
+      .click button('submit')
+      .pause 5000
+
+    # Validate after creating notification
+    client
+      .assert.containsText col(2), message
+      .assert.containsText col(3), 'Open image'
+      .assert.elementPresent col(4) + ' > img'
+      .assert.containsText button('delete'), 'Delete Notification'
+      .end()
+
