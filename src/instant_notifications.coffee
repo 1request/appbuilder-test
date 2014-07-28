@@ -81,8 +81,8 @@ module.exports =
     switchAppToKodw()
     visitInstantNotificationPage()
 
-    message = 'It\'s time to Google!'
-    url = 'http://www.google.com'
+    message = 'It\'s time for lunch!'
+    url = 'http://www.openrice.com'
 
     # Add instant notification
     client
