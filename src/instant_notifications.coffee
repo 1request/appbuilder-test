@@ -1,5 +1,3 @@
-Notification  = require '../app/models/notification'
-
 Client = require "../features/lib/client.js"
 client = undefined
 kodw = 'KODW'
