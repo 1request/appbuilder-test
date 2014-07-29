@@ -37,6 +37,28 @@ button = (action) ->
     else ''
 
 module.exports =
+  'Hide floorplan option for instant notification' : (browser) ->
+    client = new Client browser
+    login()
+    switchAppToKodw()
+    visitInstantNotificationPage()
+
+    # Goto add instant notification page
+    client
+      .click button('new')
+      .pause 1000
+      .assert.containsText 'h2' , 'Instant Notifications'
+
+    # Select action: Open web page
+    client
+      .click 'select[id="action"]'
+      .assert.elementPresent 'option[value="message"]'
+      .assert.elementPresent 'option[value="url"]'
+      .assert.elementPresent 'option[value="image"]'
+      .assert.elementPresent 'option[value="video"]'
+      .assert.elementNotPresent 'option[value="floorplan"]'
+      .end()
+
   'Create instant notification' : (browser) ->
     client = new Client browser
     login()
